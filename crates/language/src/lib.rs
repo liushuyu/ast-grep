@@ -11,6 +11,7 @@ mod bash;
 mod cpp;
 mod csharp;
 mod css;
+mod d;
 mod elixir;
 mod go;
 mod haskell;
@@ -158,6 +159,8 @@ impl_lang_expando!(Cpp, language_cpp, '_');
 impl_lang_expando!(CSharp, language_c_sharp, 'µ');
 // https://www.w3.org/TR/CSS21/grammar.html#scanner
 impl_lang_expando!(Css, language_css, '_');
+// https://dlang.org/spec/lex.html#identifiers
+impl_lang_expando!(D, language_d, 'µ');
 // https://github.com/elixir-lang/tree-sitter-elixir/blob/a2861e88a730287a60c11ea9299c033c7d076e30/grammar.js#L245
 impl_lang_expando!(Elixir, language_elixir, 'µ');
 // we can use any Unicode code point categorized as "Letter"
@@ -205,6 +208,7 @@ pub enum SupportLang {
   Cpp,
   CSharp,
   Css,
+  D,
   Go,
   Elixir,
   Haskell,
@@ -229,7 +233,7 @@ impl SupportLang {
   pub const fn all_langs() -> &'static [SupportLang] {
     use SupportLang::*;
     &[
-      Bash, C, Cpp, CSharp, Css, Elixir, Go, Haskell, Html, Java, JavaScript, Json, Kotlin, Lua,
+      Bash, C, Cpp, CSharp, Css, D, Elixir, Go, Haskell, Html, Java, JavaScript, Json, Kotlin, Lua,
       Php, Python, Ruby, Rust, Scala, Swift, Tsx, TypeScript, Yaml,
     ]
   }
@@ -316,6 +320,7 @@ impl_aliases! {
   Cpp => &["cc", "c++", "cpp", "cxx"],
   CSharp => &["cs", "csharp"],
   Css => &["css"],
+  D => &["d", "dlang", "d2"],
   Elixir => &["ex", "elixir"],
   Go => &["go", "golang"],
   Haskell => &["hs", "haskell"],
@@ -360,6 +365,7 @@ macro_rules! execute_lang_method {
       S::Cpp => Cpp.$method($($pname,)*),
       S::CSharp => CSharp.$method($($pname,)*),
       S::Css => Css.$method($($pname,)*),
+      S::D => D.$method($($pname,)*),
       S::Elixir => Elixir.$method($($pname,)*),
       S::Go => Go.$method($($pname,)*),
       S::Haskell => Haskell.$method($($pname,)*),
@@ -424,6 +430,7 @@ fn extensions(lang: SupportLang) -> &'static [&'static str] {
     Cpp => &["cc", "hpp", "cpp", "c++", "hh", "cxx", "cu", "ino"],
     CSharp => &["cs"],
     Css => &["css", "scss"],
+    D => &["d", "dd", "di", "d2"],
     Elixir => &["ex", "exs"],
     Go => &["go"],
     Haskell => &["hs"],

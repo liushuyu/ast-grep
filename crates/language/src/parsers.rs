@@ -58,6 +58,9 @@ pub fn language_c_sharp() -> TSLanguage {
 pub fn language_css() -> TSLanguage {
   into_napi_lang!(tree_sitter_css::LANGUAGE)
 }
+pub fn language_d() -> TSLanguage {
+  into_lang!(tree_sitter_d)
+}
 pub fn language_elixir() -> TSLanguage {
   into_lang!(tree_sitter_elixir)
 }
